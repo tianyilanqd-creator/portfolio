@@ -1,0 +1,446 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Yilan Tian — Into the Screen</title><style>*{box-sizing:border-box}html,body{height:100%;margin:0;overflow:hidden}body{font-family:Arial,"PingFang SC",sans-serif;background:#f8f8f8;color:#171717}button,a{color:inherit;font:inherit}button{border:0;background:none;cursor:pointer}a{text-decoration:none}button:focus-visible,a:focus-visible{outline:2px solid #8176ad;outline-offset:4px}#intro,#world{position:fixed;inset:0;overflow:hidden}#intro{z-index:2;cursor:pointer;background:#f8f8f8;touch-action:none}#camera{position:absolute;inset:0;transform-origin:var(--sx,48%) var(--sy,42%);will-change:transform,filter,opacity}.rig{position:absolute;width:min(82vw,81svh,870px);aspect-ratio:1;top:8%;left:50%;transform:translateX(-50%);animation:arrive 1s cubic-bezier(.22,.7,.2,1) both}.rig img{width:100%;display:block;mix-blend-mode:multiply;pointer-events:none}.screen{position:absolute;left:var(--screen-x,43%);top:var(--screen-y,43%);width:11%;height:8%;transform:translate(-50%,-50%) rotate(-13deg);background:#e6f2ff;opacity:0;filter:blur(10px);animation:screenlight 4s ease infinite;pointer-events:none}.introbar{position:absolute;top:25px;left:3%;right:3%;display:flex;align-items:center;gap:16px}.introbar b{font-size:clamp(24px,3vw,42px);letter-spacing:-.06em}.introbar>span{background:#ebebeb;border-radius:5px;padding:10px 13px;font-size:clamp(11px,1.4vw,17px)}.introbar button{margin-left:auto;background:#171717;color:white;padding:15px 19px;border-radius:8px;font-size:13px}.introcopy{position:absolute;left:3%;bottom:4%;pointer-events:none}.introcopy h1{margin:0;letter-spacing:-.085em;font-size:clamp(70px,9vw,150px);line-height:.92}.introcopy p{font-size:clamp(13px,1.65vw,24px);margin:20px 0 0}#enter{position:absolute;bottom:4%;right:3%;background:#171717;color:white;border-radius:7px;padding:12px 17px;display:flex;align-items:center;text-align:left;gap:12px;font-size:13px}#enter i{font-style:normal;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#fff3;font-size:15px}#enter small{display:block;font-size:9px;margin-top:4px;color:#bdbdbd}.flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}.diving #camera{animation:dive 1.13s cubic-bezier(.61,.03,.77,.59) both}.diving .flash{animation:flash 1.13s ease both}.diving .introcopy,.diving .introbar,.diving #enter{opacity:0;transition:opacity .28s}.diving{pointer-events:none}.gone{visibility:hidden}.gone *{animation-play-state:paused}
+@keyframes arrive{from{opacity:0;transform:translate(-50%,20px) scale(.98)}to{opacity:1;transform:translate(-50%,0) scale(1)}}@keyframes screenlight{0%,100%{opacity:.01}50%{opacity:.18}}@keyframes dive{0%{transform:scale(1)}30%{transform:scale(1.3);filter:blur(0)}100%{transform:scale(17);filter:blur(10px)}}@keyframes flash{0%,54%{opacity:0}83%,100%{opacity:1}}
+#world{background:#f6f5f2;display:grid;grid-template-rows:auto minmax(0,1fr) auto;padding:25px 3% 22px;opacity:0;transition:opacity .55s ease}#world.ready{opacity:1}.worldbar,.worldfoot{display:grid;grid-template-columns:1fr 1fr 1fr;align-items:start;gap:12px}.worldbar{z-index:1}.worldbar p{margin:0;text-align:center;line-height:1.5}.worldbar div{text-align:right;white-space:nowrap}.worldbar button,.worldbar a,.worldbar p,.worldfoot small{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.02em}.worldbar button,.worldbar a{padding:0}.worldbar button:hover,.worldbar a:hover{text-decoration:underline}.worldbar #back{text-align:left;font-weight:700}.worldbar #back span{margin-left:8px;color:#6f6b63;font-weight:400}.worldbar div button{margin-left:16px}#stage{position:relative;overflow:hidden;touch-action:none;cursor:grab;perspective:1100px;margin-inline:-3.2%}#stage.dragging{cursor:grabbing}.hairline{position:absolute;left:3%;right:3%;top:50%;border-top:1px solid #16161616}.cross{position:absolute;top:calc(50% - 7px);right:3%;font:13px ui-monospace,monospace;color:#666;pointer-events:none}#slides{position:absolute;inset:0;transform-style:preserve-3d}.slide{position:absolute;left:50%;top:50%;width:min(43vw,57svh,650px);height:min(50svh,40vw,470px);padding:0;transform-origin:center;will-change:transform,opacity;cursor:grab}.slide:active{cursor:grabbing}.cover{width:100%;height:100%;background:var(--color);position:relative;overflow:hidden;isolation:isolate;text-align:left;color:#191815;display:flex;flex-direction:column;justify-content:space-between;padding:6%;box-shadow:0 8px 34px #13131112}.cover:before{content:'';position:absolute;z-index:-1;inset:18% 10%;background:repeating-linear-gradient(var(--tilt),#0000 0 12px,#15151527 13px 14px);mask-image:radial-gradient(ellipse,#000 0 37%,transparent 72%);transform:scale(1.25)}.cover .id{font:10px ui-monospace,monospace;border-bottom:1px solid #0005;padding-bottom:8px;display:flex;justify-content:space-between}.cover strong{font-size:clamp(20px,4.1vw,66px);line-height:.92;letter-spacing:-.065em;overflow-wrap:anywhere;max-width:90%}.cover em{font:9px ui-monospace,monospace;letter-spacing:.08em}.slide.selected:hover .cover strong{transform:translateX(5px)}.cover strong{transition:transform .4s}.cover.with-image{background-size:cover;background-position:center;color:white}.cover.with-image:before{inset:0;background:linear-gradient(0deg,#0008,transparent 70%);mask-image:none}.worldfoot{border-top:1px solid #1a1a1a2f;padding-top:14px;align-items:end}.activeinfo h2{font-size:clamp(19px,2.8vw,39px);letter-spacing:-.06em;margin:5px 0}.activeinfo p{font-size:11px;margin:0;color:#68645e}.worldfoot #view{justify-self:center;padding:10px 0;border-bottom:1px solid;font-size:13px}.worldfoot #view span{margin-left:9px}.controls{justify-self:end;display:grid;grid-template-columns:1fr 1fr;gap:8px}.controls button{width:38px;height:34px;border:1px solid #1717173d}.controls button:hover{background:#171717;color:#fff}.controls small{grid-column:1/-1;text-align:center;color:#68645e;font-size:8px}.worldfoot .activeinfo small{color:#68645e}dialog{width:min(850px,94vw);max-height:88svh;padding:clamp(26px,5vw,70px);border:0;background:#f6f5f2;color:#161616;overflow:auto}dialog::backdrop{background:#19191785;backdrop-filter:blur(8px)}#close{position:absolute;right:12px;top:8px;font-size:32px}dialog h2{font-size:clamp(34px,6vw,70px);letter-spacing:-.075em;margin:15px 0 30px}dialog h3{font-size:15px;margin-top:25px}dialog p{font-size:14px;line-height:1.9}dialog small{font:11px ui-monospace,monospace}dialog .metrics{display:flex;gap:25px;border-block:1px solid #1113;padding-block:18px}.metrics b{font-size:27px;display:block}.metrics span{font-size:11px}.indexrow{display:grid;grid-template-columns:40px 1fr auto;text-align:left;align-items:center;width:100%;gap:12px;border-top:1px solid #17171738;padding:15px 0}.indexrow:hover{padding-left:8px}.indexrow i{font:10px ui-monospace,monospace}.placeholder{font-size:11px;color:#625e57;border-top:1px solid #1112;padding-top:15px}
+@media(max-width:650px){.introbar{gap:8px;top:16px;left:5%;right:5%}.introbar button{padding:11px;font-size:11px}.introbar>span{padding:7px;font-size:9px}.rig{width:min(104vw,70svh);top:50%;margin-top:max(-52vw,-35svh)}.introcopy{left:5%;bottom:16%}.introcopy h1{font-size:clamp(58px,14vw,95px)}.introcopy p{margin-top:12px}#enter{left:5%;right:auto;bottom:5%}#world{padding:17px 4%}.worldbar{grid-template-columns:1fr 1fr}.worldbar p{display:none}.worldbar button,.worldbar a{font-size:10px}.worldbar #back span{display:none}.worldbar div button{margin-left:8px}#stage{margin-inline:-4.3%}.slide{width:68vw;height:min(45svh,76vw)}.cover strong{font-size:clamp(28px,7vw,50px)}.worldfoot{grid-template-columns:1.5fr .7fr auto;gap:7px}.activeinfo p{font-size:9px}.worldfoot #view{font-size:10px;white-space:nowrap}.controls{gap:5px}.controls button{width:28px;height:29px}.controls small{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+.rig{--screen-x:39.5%;--screen-y:33%;animation:arrive 1s cubic-bezier(.22,.7,.2,1) both, desk-motion 9s 1s ease-in-out infinite}
+.screen{width:19%;height:16%;transform:translate(-50%,-50%) rotate(-14deg);filter:none;background:linear-gradient(130deg,#ffffff55,#c7c7ff75 51%,#fff7);clip-path:polygon(0 4%,97% 0,100% 92%,3% 100%);animation:screenlight 3.7s ease infinite}
+.screen:after{content:'';position:absolute;width:6%;height:10%;background:#fff;left:18%;top:52%;clip-path:polygon(0 0,100% 62%,49% 67%,35% 100%);animation:cursor 4s ease-in-out infinite}.diving .rig{animation-play-state:paused}
+@keyframes desk-motion{0%,100%{transform:translate(-50%,0) scale(1)}50%{transform:translate(-50%,0) scale(1.018)}}@keyframes cursor{50%{transform:translate(350%,-150%)}80%{transform:translate(500%,70%)}}
+/* The screen world: white canvas, orbital contact sheets, one large case image. */
+#world{display:block;padding:0;background:#fff;color:#000}
+.worldbar{position:absolute;z-index:1000;inset:14px 15px auto;display:grid;grid-template-columns:1fr 1fr 1fr;align-items:start;pointer-events:none}
+.worldbar p{font:11px/1.3 "Helvetica Neue",Arial,sans-serif;max-width:200px;text-align:left;letter-spacing:.01em}
+.worldbar #back{justify-self:center}.worldbar div{justify-self:end;display:flex;gap:4px}.worldbar div button{margin:0}
+.worldbar #back,.worldbar div a,.worldbar div button,.worldfoot button{pointer-events:auto;display:inline-block;padding:3px 5px;background:#000;border-radius:2px;color:#fff;font:11px/1.05 "Helvetica Neue",Arial,sans-serif;white-space:nowrap;transition:background .2s,color .2s;text-decoration:none}
+.worldbar #back:hover,.worldbar div a:hover,.worldbar div button:hover,.worldfoot button:hover{background:#e6e6e6;color:#000;text-decoration:none}
+#stage{position:absolute;inset:0;margin:0;overflow:hidden;perspective:none;isolation:isolate}#slides{transform-style:flat;pointer-events:none}
+.slide{width:clamp(56px,12svh,124px);height:clamp(46px,10.2svh,105px);pointer-events:none!important}
+.cover{box-shadow:none;border-radius:0;padding:5%;color:#181715}.cover .id{font-size:9px;padding-bottom:4px}.cover strong{font-size:clamp(26px,5.4svh,63px);line-height:.9}.cover em{font-size:8px}.slide .cover strong{font-size:clamp(7px,1.3svh,15px)}.slide .cover .id,.slide .cover em{font-size:4px}
+#feature{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(56svh,62vw);height:min(46.7svh,53vw);padding:0;transition:opacity .35s}
+#feature:hover{cursor:pointer}.unfolding #feature,.unfolding .worldfoot{opacity:0;pointer-events:none}.unfolding #feature{visibility:hidden}
+.worldfoot{position:absolute;z-index:1000;left:50%;bottom:17px;transform:translateX(-50%);display:flex;align-items:center;gap:4px;border:0;padding:0;transition:opacity .4s}
+.worldfoot #view{padding:3px 5px;border:0;background:#e6e6e6;color:#000;font-size:11px}
+.worldfoot #view:hover{background:#000;color:#fff}.keys{position:absolute;bottom:16px;right:15px;z-index:1000;display:flex;align-items:center;gap:5px;font:10px ui-monospace,monospace;color:#656565}.keys button{padding:2px 5px}.keys button:hover{color:#000;background:#eee}
+@media(max-width:650px){.worldbar{inset:12px 10px auto;grid-template-columns:1fr 1fr}.worldbar #back{justify-self:start}.worldbar p{display:none}#feature{width:min(62vw,48svh);height:min(54vw,40svh)}.slide{width:12vw;height:10vw}.keys{right:8px;bottom:9px}.keys small{display:none}.worldfoot{bottom:12px}}
+#slides .slide{pointer-events:auto!important;cursor:pointer}
+#stage.dragging #slides .slide,.unfolding #slides .slide{pointer-events:none!important}
+#slides .slide:hover .cover{outline:1px solid #17171755;outline-offset:2px}
+.rig .editor,.rig .hand{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.rig .screen{opacity:0;animation:none}
+.rig .hand{background-image:var(--photo);background-size:100% 100%;mix-blend-mode:multiply}
+.hand-a{clip-path:polygon(40.9% 44.7%,42.2% 42.8%,44.1% 41.4%,46% 41.1%,48.3% 42.8%,49.8% 45.8%,47.9% 47%,45.6% 46.8%,42.6% 45.5%);animation:typing-a 1.31s steps(1,end) infinite}
+.hand-b{clip-path:polygon(46.8% 41.5%,47.8% 39.6%,49.3% 38.6%,51.9% 38.6%,54.1% 39.6%,55.2% 40.8%,54.9% 43.5%,52.9% 43.8%,49.4% 42.6%);animation:typing-b 1.53s steps(1,end) infinite}
+@keyframes typing-a{0%,21%,53%,82%,100%{transform:none}12%,40%,69%{transform:translate(.18%,-.25%)}30%,91%{transform:translate(-.13%,.2%)}}
+@keyframes typing-b{0%,17%,44%,76%,100%{transform:none}8%,35%,64%,88%{transform:translate(-.19%,.2%)}26%,55%{transform:translate(.11%,-.23%)}}
+#screen-caret{animation:editor-caret 1s steps(1,end) infinite}@keyframes editor-caret{50%{opacity:0}}
+.diving .hand,.gone .hand{animation-play-state:paused}
+/* Layout calibrated against the supplied reference frame. */
+#world{background:#fdfdfd}
+#feature{top:50.5%;width:min(45.4vw,85.3svh);height:min(25.55vw,48svh)}
+#slides .slide{top:54%;width:min(11.1vw,20.8svh);height:min(6.24vw,11.7svh)}
+#slides .slide .cover strong{font-size:clamp(7px,1.55svh,17px)}
+#feature .cover strong{font-size:clamp(24px,7.7svh,105px)}
+#feature .cover:before,#slides .cover:before{mask-image:none;inset:0;opacity:.42}
+.worldbar{inset:0 0.48% auto;grid-template-columns:1fr 1fr 1fr;gap:5px}
+.worldbar .identity,.worldbar .contact{display:flex;gap:3px;align-items:start}
+.worldbar .identity{justify-self:start}
+.worldbar .contact{justify-self:end}
+.worldbar nav{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;width:min(21.5vw,470px);justify-self:center}
+.worldbar #back,.worldbar div a,.worldbar nav button,.worldbar time,.worldfoot button,.worldfoot #view{font:500 clamp(10px,.76vw,22px)/1.05 "Helvetica Neue",Arial,sans-serif;padding:2px 4px;border-radius:2px}
+.worldbar nav button,.worldbar time{background:#000;color:#fff;white-space:nowrap}
+.worldbar nav button{pointer-events:auto;text-align:left}
+.worldbar nav button:hover{background:#e6e6e6;color:#000}
+.worldfoot{bottom:0;gap:3px}
+.keys{bottom:4px}
+.rig .hand{animation:none;transition:transform 65ms ease-out}
+.rig[data-typing="1"] .hand-a,.rig[data-typing="3"] .hand-b{transform:translate(.1%,-.45%)}
+.rig[data-typing="2"] .hand-a,.rig[data-typing="4"] .hand-b{transform:translate(-.11%,.24%);transition-duration:28ms}
+@media(max-width:650px){
+ .worldbar{grid-template-columns:auto 1fr auto;inset:5px 5px auto}.worldbar nav{width:min(52vw,245px)}.worldbar time{display:none}
+ #feature{width:69vw;height:38.8vw}
+ #slides .slide{width:18vw;height:10.125vw;top:53%}
+ #feature .cover strong{font-size:clamp(23px,7.8vw,55px)}
+}
+
+/* Enlarge the entire composition while keeping the reference's 16:9 framing. */
+#feature{width:min(49.1vw,92.16svh);height:min(27.62vw,51.84svh)}
+#slides .slide{width:min(12vw,22.46svh);height:min(6.74vw,12.64svh)}
+.rig[data-typing="1"] .hand-a{transform:translate(.16%,-.94%) rotate(-.55deg);transform-origin:48% 46%}
+.rig[data-typing="3"] .hand-b{transform:translate(-.12%,-.86%) rotate(.5deg);transform-origin:54% 43%}
+.rig[data-typing="2"] .hand-a,.rig[data-typing="4"] .hand-b{transform:translate(-.18%,.34%);transition-duration:0ms}
+@media(max-width:650px){
+ #feature{width:74vw;height:41.625vw}
+ #slides .slide{width:19.4vw;height:10.91vw}
+}
+#typing-hands{position:absolute;left:39.713%;top:37.959%;width:20.335%;height:9.968%;pointer-events:none;mix-blend-mode:multiply}
+.rig{mix-blend-mode:multiply}.rig img,#typing-hands{mix-blend-mode:normal}
+#typing-hands{left:38.5965%;top:36.8421%;width:26.3158%;height:15.4705%}
+.introcopy .title-t{letter-spacing:-.027em}
+.cover.media-cover{padding:0;background:#fff;display:block}
+#feature .cover.media-cover::before,#slides .cover.media-cover::before{content:none}
+.media-cover img{display:block;width:100%;height:100%;object-fit:contain}
+.case-media{margin:25px 0 0}.case-media img{display:block;max-width:100%;width:auto;max-height:75svh;margin:auto;object-fit:contain}
+/* Fit the image itself to the gallery bounds, without a backing rectangle. */
+#feature[data-ratio]:not([data-ratio=""]){width:min(49.1vw,92.16svh,calc(51.84svh * var(--photo-ratio)));height:auto;aspect-ratio:var(--photo-ratio)}
+#slides .slide[data-ratio]{width:min(12vw,22.46svh,calc(12.64svh * var(--photo-ratio)));height:auto;aspect-ratio:var(--photo-ratio)}
+.cover.media-cover{background:transparent}
+#slides .slide:hover .media-cover{outline-offset:0}
+@media(max-width:650px){
+ #feature[data-ratio]:not([data-ratio=""]){width:min(74vw,calc(45svh * var(--photo-ratio)))}
+ #slides .slide[data-ratio]{width:min(19.4vw,calc(14svh * var(--photo-ratio)))}
+}
+.huawei-stills>div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.huawei-stills figure{margin:0}.huawei-stills img{display:block;width:100%;height:auto}
+.huawei-stills figcaption{font-size:11px;margin-top:6px;color:#68645e}
+.extra-case-still .case-media{margin-top:9px}
+
+dialog.photo-panel {
+ width:100vw; max-width:none; height:100dvh; max-height:none;
+ margin:0; padding:0; background:#fff; overflow:hidden;
+}
+.photo-panel #close {
+ z-index:2; top:12px; right:16px; padding:5px 10px;
+ background:#111; color:#fff; border-radius:3px; font-size:14px;
+}
+.photo-album {
+ height:100dvh; display:grid; grid-template-rows:minmax(0,1fr) auto;
+ padding:48px 16px 14px; gap:12px;
+}
+.photo-stage { position:relative; min-height:0; touch-action:none; }
+.photo-stage img {
+ position:absolute; inset:0; width:100%; height:100%;
+ object-fit:contain; opacity:0; pointer-events:none; transition:opacity .36s ease;
+}
+.photo-stage img.current { opacity:1; }
+.photo-stage button { position:absolute; inset:0 50% 0 0; }
+.photo-stage button[data-step="1"] { inset:0 0 0 50%; }
+.photo-hint {
+ position:absolute; z-index:1; pointer-events:none;
+ transform:translate(8px,-50%); white-space:nowrap;
+}
+.photo-album footer { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+.photo-album footer div { display:flex; gap:4px; align-items:center; }
+.photo-album footer h2,.photo-album footer button,.photo-album output,.photo-hint {
+ margin:0; padding:4px 8px; border-radius:3px;
+ background:#111; color:white; font-size:14px; letter-spacing:0; font-weight:500;
+}
+.photo-album output,.photo-hint { font-variant-numeric:tabular-nums; }
+@media (prefers-reduced-motion:reduce) { .photo-stage img { transition:none; } }
+
+.creator-videos{margin-top:25px}
+.creator-videos video{display:block;width:auto;max-width:100%;height:clamp(180px,58svh,580px);margin:14px auto 24px;background:#111}
+</style></head><body>
+<section id="intro" aria-label="Yilan Tian 的工作台">
+ <div id="camera"><div class="rig" aria-hidden="true"><img alt="" src="assets/674062027bce2d48060e.png"><span class="screen"></span><svg class="editor" viewBox="0 0 1254 1254" aria-hidden="true"><defs><clipPath id="display-edge"><polygon points="372,365 582,296 620,452 419,531"/></clipPath></defs><g clip-path="url(#display-edge)"><g transform="matrix(1,-.324,.27,.94,370,364)"><rect width="218" height="180" fill="#19191d"/><rect x="10" y="12" width="172" height="147" fill="#e8e7e5"/><rect x="20" y="18" width="152" height="131" fill="#faf9f6"/><path d="M188 19h25m-25 8h22m-22 10h26m-26 9h17m-17 15h23m-23 8h23m-23 10h18m-18 9h24M3 22h4m-4 9h4m-4 9h4m-4 9h4m-4 9h4M19 5h60m9 0h36m14 0h20" stroke="#85858a" stroke-width="1.5"/><path d="M14 168h194" stroke="#ac5942" stroke-width="3"/><text x="36" y="66" font-size="8" fill="#313132" font-family="monospace" id="screen-type"></text><path id="screen-caret" d="M0 0v9" stroke="#343436" stroke-width="1"/></g></g></svg></div></div>
+ <header class="introbar"><b>Yilan Tian</b><span>New Media &amp; Content</span><button id="skip">进入作品 ↗</button></header>
+ <div class="introcopy"><h1>Yilan <span class="title-t">T</span>ian</h1><p>把日常的灵感，变成被看见的内容。</p></div>
+ <button id="enter"><i>↗</i><span>进入屏幕<small>点击或滑动</small></span></button>
+ <div class="flash" aria-hidden="true"></div>
+</section>
+<main id="world" inert aria-label="作品档案">
+ <header class="worldbar"><div class="identity"><button id="back" title="返回工作台">Yilan Tian</button><time id="clock"></time></div><nav aria-label="作品导航"><button id="work">Work</button><button id="index">Index</button><button id="information">Information</button></nav><div class="contact"><a href="mailto:tianyilanqd@126.com">Email</a></div></header>
+ <div id="stage" aria-label="拖动或滚动以转动作品环"><div id="slides"></div><button id="feature" aria-label="查看当前档案"></button></div>
+ <footer class="worldfoot"><button id="project"></button><button id="view">View Case</button></footer>
+ <div class="keys"><button id="prev" aria-label="上一项">←</button><small id="num"></small><button id="next" aria-label="下一项">→</button></div>
+</main>
+<dialog id="panel"><button id="close" aria-label="关闭">×</button><div id="body"></div></dialog>
+<script>const portfolioMedia=["assets/3771ff0003306fc33b11.jpg","assets/8ec41e19c3b3bb294060.jpg","assets/a5944f10af62c32ae409.png","assets/7002f03a351011c58cdc.jpg","assets/28f20ec885b67a54e71b.jpg","assets/98633f1414bf541b19c0.jpg","assets/58f5c0f948e7d06706a3.jpg"];
+const huaweiStills=["assets/9bea242d7ff524c8f7e1.png","assets/36291bcb82cce5a9fda3.png"];
+const extraCaseStills={"eleme":"assets/be45998a104df9de65cf.png","creator":"assets/7a7affadc071d329f179.png"};
+const portfolioMediaSizes=[[1440, 2186], [595, 1030], [500, 500], [1179, 933], [1179, 630], [1080, 1534], [1179, 1703]];
+
+const photography = [{"name":"R0002356.jpg","width":1453,"height":1920,"src":"assets/e677f8a8ad072d07193b.jpg"},{"name":"R0003904.jpg","width":1307,"height":1920,"src":"assets/5a98f54e5659d475c60f.jpg"},{"name":"R0002193.JPG","width":1920,"height":1280,"src":"assets/6bab7d59f27481405191.jpg"},{"name":"R0002165.jpg","width":1920,"height":1280,"src":"assets/a9b3a4644764445e8f59.jpg"},{"name":"R0002458.jpg","width":1280,"height":1920,"src":"assets/4410ad3257e6d3101ecf.jpg"},{"name":"R0000610.jpg","width":1280,"height":1920,"src":"assets/215f0da7cb43459aed99.jpg"},{"name":"R0001187.JPG","width":1920,"height":1280,"src":"assets/0fedbc9abb31cd6d6c7a.jpg"},{"name":"R0003745.JPG","width":1920,"height":1280,"src":"assets/f4aa453c4ef081fb6a17.jpg"},{"name":"R0000370.JPG","width":1280,"height":1920,"src":"assets/2b418e33ed340927078a.jpg"},{"name":"R0003792.JPG","width":1280,"height":1920,"src":"assets/dcf1ceac6b6b9a4e06ed.jpg"},{"name":"R0000671.JPG","width":1280,"height":1920,"src":"assets/3a0cbb8ac31d3ffc23fe.jpg"},{"name":"R0003014.JPG","width":1280,"height":1920,"src":"assets/6543bce0bc8f048d172f.jpg"},{"name":"R0000662.JPG","width":1280,"height":1920,"src":"assets/dc82165ec83be0e697dd.jpg"},{"name":"R0002760.JPG","width":1280,"height":1920,"src":"assets/ffa1762785c8aa621d3a.jpg"},{"name":"R0000633.JPG","width":1280,"height":1920,"src":"assets/177668bd645e2cf1236c.jpg"},{"name":"R0000263.JPG","width":1920,"height":1280,"src":"assets/0d6440518327872b1599.jpg"},{"name":"R0002438.JPG","width":1280,"height":1920,"src":"assets/e00ad14ab037bf0d5e00.jpg"},{"name":"R0002459.JPG","width":1920,"height":1280,"src":"assets/e7a8c5055c57e6aa8bb1.jpg"},{"name":"R0000398.jpg","width":1280,"height":1920,"src":"assets/d544a17be3e10e008ded.jpg"},{"name":"R0000248.jpg","width":1920,"height":1280,"src":"assets/5238bcbe80724b6f9737.jpg"},{"name":"R0000812.JPG","width":1280,"height":1920,"src":"assets/9e1c983583884afc8eae.jpg"}];
+
+const resumeCopy=[
+{title:'田怡兰',groups:[
+ ['个人优势',['内容营销：精通短视频从选题策划、脚本撰写到拍摄剪辑的完整流程，服务华为、饿了么等 5+品牌客户，具备成熟的内容定制与落地能力。','商务对接：深度参与品牌商业合作项目，累计创造项目营收超 3 万元；擅长拆解品牌诉求，转化为场景化、高接受度的内容方案。','用户运营：具备私域社群运营、线下活动转化、学员全周期运营经验，运营 270 人精准用户社群，支撑百人级线下讲座。','全球视野与语言优势：伦敦国王学院全球媒体专业硕士（QS 31），雅思 7.0，可支撑英文内容创作与海外相关业务。']],
+ ['教育背景',['伦敦国王学院（QS 31） 全球媒体行业｜硕士 2025.09-2027.01','主修课程：城市中的媒体产业、媒体产业合作项目、全球媒体行业研究方法。','天津工业大学（双一流） 广播电视编导｜学士 2021.09-2025.06','GPA：87.68/100 专业排名前 10% 校三好学生、连续 3 次获校级奖学金','主修课程：新媒体运营、新闻采访与写作、视听语言、影视剧编剧。']],
+ ['专业技能',['核心能力：品牌内容策划、短视频全流程制作、用户运营、活动执行、商务需求对接','平台经验：精通小红书、抖音、公众号等主流新媒体平台规则与流量逻辑，熟悉多垂类运营打法','软件工具：剪映、Premiere、After Effects、Photoshop、Illustrator、PPT、Office','语言能力：雅思 7.0、大学英语六级、韩语']]]},
+{title:'抖音&小红书博主',subtitle:'独立运营人 2024.10 -至今',groups:[['',[
+ '账号定位与内容体系搭建：锚定「女性生活成长」赛道，结合自身留学生身份，搭建留学干货、城市旅行、生活美学三大内容板块，覆盖留学生、年轻白领等高价值女性用户。',
+ '爆款选题策划与流量增长：拆解抖音&小红书平台算法逻辑与用户内容偏好，打造多篇高互动爆款内容；小红书单篇最高阅读量 6 万+、获赞收藏 3800+；抖音单条最高播放量 2 万',
+ '商业化变现：凭借垂类内容影响力与精准用户触达能力，收到服装品牌信息流广告与寄拍合作邀约，单条合作报价 300 元']]]},
+{title:'华为 Nova12 推广',groups:[['',['对接广告代理商，结合品牌用户画像与青岛毕业季、城市旅游场景，策划街头采访+事件营销双创意方案，将产品卖点自然融入青春叙事，创意方向获甲方高度认可。']]]},
+{title:'饿了么×青岛啤酒节联动',groups:[['',['配合团队完成品牌定制短视频拍摄执行，协调出镜人员与现场资源，零场地成本完成项目交付，视频全网播放量超 10w+，抖音点赞 4300+。']]]},
+{title:'短视频项目从 0 到 1 孵化',groups:[['',['独立搭建「节气美食」系列短视频栏目，主导内容定位、选题策划、拍摄剪辑全流程，确立本土化、生活化的栏目内容风格；完成 3 家合作餐饮商家的内容对接与交付。']]]},
+{title:'卓越兴考研',subtitle:'用户运营 2024.03-2024.06',groups:[['',[
+ '用户运营：运营 270 人考研备考社群，定期同步活动资讯、解答用户疑问，维护社群活跃氛围，沉淀高意向目标用户池，为招生转化储备精准用户。',
+ '活动策划：参与 3-4 场百人级考研讲座的宣传引流与现场执行，配合完成会前推广、会场协调及会后用户跟进，单场讲座实现约 10 人课程报名，转化率达 10%，助力团队招生目标达成。',
+ '营销物料：撰写 20+条推广文案，统筹辅导教材、品牌周边等引流物料分发，配合搭建“引流-种草-转化”的用户增长闭环。']]]},
+{title:'校园经历',groups:[['教育背景',['天津工业大学（双一流） 广播电视编导｜学士 2021.09-2025.06','GPA：87.68/100 专业排名前 10% 校三好学生、连续 3 次获校级奖学金','主修课程：新媒体运营、新闻采访与写作、视听语言、影视剧编剧。']],['本科阶段',[
+ '创意策划与内容开发：多次担任校园影视项目导演、编剧及摄像，独立构思创意选题、故事框架与内容呈现形式，将抽象创意转化为可执行的拍摄方案，具备较强的内容创新与视觉叙事能力。',
+ '项目统筹与全流程落地：深度参与剧本创作、分镜设计、现场调度及拍摄执行等环节，协调演员与拍摄资源，推动创意方案从前期策划到最终成片落地，积累多项目实战经验。']]]},
+{title:'个人摄影',groups:[]},
+{title:'KCL 媒体项目',subtitle:'纪录片企划｜《太阳下山，明天依旧爬上来》',groups:[
+ ['项目从0到1交付',['带领3人团队完成少数民族丧葬文化纪录片企划，统筹选题开发、受众定位、内容策划、宣发设计及提案交付全流程；10周内组织18次例会，结合导师反馈推进方案迭代，完成项目提案书、一年期制作排期及预算。']],
+ ['创意开发与内容定位',['围绕全球文化传播挖掘差异化选题，以4个民族案例搭建内容框架，将文化研究转化为具备叙事切入点、明确受众及传播卖点的纪录片企划。']],
+ ['受众洞察与整合营销',['结合B站用户年龄及教育背景数据，明确18—35岁目标受众；独立制定社交媒体广告、文化类KOL联动、高校主题讲座及模拟B站线下合作活动的组合宣发方案，规划线上触达与线下互动路径。']],
+ ['视觉设计与提案包装',['独立完成项目海报设计与作品集排版，撰写新闻通稿，统筹提案内容结构与视觉呈现，将抽象创意转化为可展示、可传播的项目材料，完成从内容构想到视觉成品的交付。']]]}
+];
+
+const projects=[
+{title:'先认识一下我',en:'01 / ABOUT YILAN',sub:'个人信息 · 经历 · 能力',icon:'Hello, I’m Yilan.',color:'#eac5ce',lead:'我是田怡兰，关注内容与人之间的连接。',body:'从品牌短视频到个人账号，从线下活动到社群运营，我喜欢把一个想法推进到真实的内容现场。',sections:[['教育背景','伦敦国王学院｜全球媒体行业 硕士（2025.09—2027.01）<br>天津工业大学｜广播电视编导 学士（2021.09—2025.06）<br>本科均分 87.68/100，专业前 10%。'],['工作经历','半岛都市报 全媒体消费中心｜活动策划 & 商务 BD（2024.07—2024.09）<br>卓越兴考研｜用户运营（2024.03—2024.06）'],['我的工具箱','剪映 / Premiere / After Effects / Photoshop / Illustrator / Office<br>雅思 7.0、大学英语六级、韩语']],tags:['内容策划','短视频制作','用户运营','商务对接'],metrics:[['5+','服务品牌客户'],['3万+','累计项目营收'],['7.0','雅思成绩']]},
+{title:'自媒体博主',en:'02 / PERSONAL CHANNELS',sub:'小红书 × 抖音 · 独立运营',icon:'她的生活，不止一面',color:'#e4a9b6',lead:'以女性生活成长为主线，建立有温度的个人内容体系。',body:'结合留学生身份，围绕留学干货、城市旅行、生活美学三个内容板块，面向留学生与年轻白领创作。自 2024 年 10 月起独立运营。',sections:[['我的工作','账号定位、内容板块搭建、选题策划、拍摄剪辑与发布，结合平台机制与用户偏好持续调整内容。'],['商业化探索','收到服装品牌信息流广告与寄拍合作邀约，简历记录的单条合作报价为 300 元。']],metrics:[['6万+','小红书单篇最高阅读'],['3800+','单篇获赞收藏'],['2万','抖音单条最高播放']],tags:['账号定位','选题策划','内容商业化']},
+{title:'华为 nova12 · 青春在场',en:'03 / BRAND STORY',sub:'品牌策划 · 街采 × 事件营销',icon:'nova 12 ↗',color:'#c4cbe2',lead:'让产品卖点，走进青岛毕业季与城市旅行的青春叙事。',body:'在半岛都市报实习期间对接广告代理商，结合品牌用户画像，策划街头采访与事件营销双创意方案。',sections:[['我的贡献','需求沟通、用户场景分析、创意方向及内容脚本策划。'],['项目反馈','创意方向获甲方高度认可。此项目当前展示的是策划能力，简历未提供独立传播数据。']],tags:['品牌需求拆解','场景化表达','创意策划']},
+{title:'饿了么 × 青岛啤酒节',en:'04 / CAMPAIGN IN MOTION',sub:'定制短视频 · 拍摄执行',icon:'夏天，就这一口。',color:'#b8d7e4',lead:'把品牌联动带到热闹的啤酒节现场。',body:'配合团队完成品牌定制短视频拍摄，协调出镜人员与现场资源，零场地成本完成项目交付。',sections:[['我的贡献','参与拍摄执行，协调人员与现场资源，支持团队完成定制内容交付。'],['项目结果','以下为简历记录的项目整体传播表现。']],metrics:[['10万+','全网播放量'],['4300+','抖音点赞'],['0','场地成本']],tags:['现场协调','拍摄执行','品牌联动']},
+{title:'节气美食 · 从零到一',en:'05 / ORIGINAL SERIES',sub:'栏目孵化 · 本土生活方式',icon:'二十四时，三餐四季',color:'#d9dcb9',lead:'用节气讲美食，用生活感连接本地商家。',body:'独立搭建「节气美食」短视频系列，从内容定位到选题、拍摄与剪辑，确立本土化、生活化的栏目风格。',sections:[['我的贡献','主导栏目从 0 到 1 孵化；完成 3 家合作餐饮商家的内容对接与交付。'],['内容方法','以时令生活为切口，将商家内容融入可感知的日常场景。']],metrics:[['0→1','独立栏目孵化'],['3家','合作餐饮商家']],tags:['栏目策划','拍摄剪辑','商家对接']},
+{title:'从社群到线下的连接',en:'06 / COMMUNITY & GROWTH',sub:'考研社群 · 活动转化',icon:'270 人的共同目标',color:'#d1c6dc',lead:'把每一次用户沟通，连接到真实的服务与转化。',body:'在卓越兴考研参与用户运营，维护备考社群，配合百人级线下讲座的宣传引流、现场协调与会后跟进。',sections:[['我的贡献','维护 270 人社群，定期同步活动资讯并解答疑问；参与 3—4 场讲座，撰写 20+ 条推广文案，统筹引流物料分发。'],['转化表现','简历记录单场讲座约 10 人报名，转化率约 10%；为团队活动结果。']],metrics:[['270','社群用户'],['20+','推广文案'],['≈10%','单场讲座转化率']],tags:['社群维护','活动执行','用户跟进']},
+{title:'校园经历',en:'07 / CAMPUS EXPERIENCE',sub:'大学创作 · 作品选集',icon:'校园经历',color:'#c8d6ce',lead:'大学期间的作品选集。',body:'此处预留给大学期间的课程作品、个人创作或团队项目。',sections:[['作品展示','下方是大学作品清单。原视频或播放链接待补充。']],tags:['大学作品']},
+{title:'个人摄影',en:'08 / PERSONAL PHOTOGRAPHY',sub:'个人影像 · 摄影作品集',icon:'个人摄影',color:'#d9d4ca',lead:'用照片记录人物、街道与日常。',body:'这里将集中展示个人摄影作品，并为每组照片注明拍摄主题和创作思路。',sections:[['摄影图集','原创照片待补充。'],['创作说明','可随照片补充取景、构图、用光与后期处理的思路。']],tags:['个人摄影']},
+{title:'KCL 媒体项目',en:'09 / KCL MEDIA PROJECT',sub:'纪录片企划 · 宣发设计',icon:'太阳下山，明天依旧爬上来',color:'#e1b19a'}
+];
+
+const q=s=>document.querySelector(s), intro=q('#intro'), world=q('#world'), stage=q('#stage'), panel=q('#panel');
+const rm=matchMedia('(prefers-reduced-motion: reduce)'), len=projects.length;
+const mod=n=>((n%len)+len)%len, fmt=n=>String(n).padStart(2,'0');
+let hovered=null;
+let target=0, current=0, raf=0, phase='desk', press=null, suppress=0, wheelTime=0;
+const titles=['关于\n怡兰','自媒体\n博主','青春在场\n华为 nova12','饿了么 ×\n青岛啤酒节','节气美食\n从零到一','从社群\n到线下','校园\n经历','个人\n摄影','KCL\n媒体项目'];
+const photoCover=photography[photography.length-1];
+const photoCase=projects.findIndex(p=>p.title==='个人摄影');
+const kclCase=projects.findIndex(p=>p.title==='KCL 媒体项目');
+const kclImages=["assets/12aca043af4518475fe8.png", "assets/15f11c5e57acf6b55f32.png"];
+if(kclImages.length){
+ portfolioMedia[kclCase]=kclImages[0];
+ portfolioMediaSizes[kclCase]=[1080,1920];
+}
+portfolioMedia[photoCase]=photoCover.src;
+portfolioMediaSizes[photoCase]=[photoCover.width,photoCover.height];
+const slides=projects.map((p,i)=>{
+ const el=document.createElement('button');
+ el.className='slide';el.setAttribute('aria-label',p.title);el.style.setProperty('--color',p.color);el.style.setProperty('--tilt',((i*51+26)%180)+'deg');
+ el.innerHTML='<span class="cover"><span class="id"><span>YT / ARCHIVE</span><span>'+fmt(i+1)+'</span></span><strong>'+titles[i].replace('\n','<br>')+'</strong><em>'+ (i?'COVER STUDY / 素材待补充':'PROFILE / 田怡兰') +'</em></span>';
+ if(typeof portfolioMedia!=='undefined'&&portfolioMedia[i])el.innerHTML='<span class="cover media-cover"><img src="'+portfolioMedia[i]+'" alt=""></span>';
+ const size=typeof portfolioMediaSizes!=='undefined'?portfolioMediaSizes[i]:null;
+ if(size){el.dataset.ratio=String(size[0]/size[1]);el.style.setProperty('--photo-ratio',el.dataset.ratio)}
+ el.tabIndex=-1;
+ el.addEventListener('pointerenter',e=>{if(e.pointerType==='touch'||phase!=='world'||expansion<1||press?.moving)return;hovered=i;syncFeature(i)});
+ el.onclick=()=>{if(performance.now()<suppress)return;detail(i)};
+ q('#slides').append(el);return el;
+});
+function relative(i,pos){return mod(i-pos+len/2)-len/2}
+const feature=q('#feature');
+const ringCenterLayer=400;
+feature.style.zIndex=String(ringCenterLayer);
+let revealId=0, displayed=-1, leanX=0, leanY=0, wantX=0, wantY=0, expansion=1;
+function draw(){
+ const height=stage.clientHeight||600,width=stage.clientWidth||800;
+ const distance=height*1.21, radius=Math.min(width*.281,height*.562);
+ const roll=leanX*.08;
+ slides.forEach((slide,i)=>{
+  const a=(i-current)*2*Math.PI/len+leanY*.11;
+  const x=Math.sin(a)*radius*expansion,z=Math.cos(a)*radius*expansion;
+  const y=-x*roll-z*leanX*.14;
+  const scale=distance/(distance-z);
+  slide.style.transform='translate(-50%,-50%) translate3d('+x*scale+'px,'+y*scale+'px,0) scale('+scale*(1+(1-expansion)*1.5)+') rotateY('+a+'rad)';
+  slide.style.opacity=String(Math.min(1,.33+expansion));
+  slide.style.zIndex=String(ringCenterLayer+Math.sign(z)*Math.ceil(Math.abs(z)));
+  slide.style.pointerEvents=expansion===1?'auto':'none';
+ });
+}
+function syncFeature(n){
+ if(displayed===n)return;
+ displayed=n;
+ feature.innerHTML=slides[n].innerHTML;
+ feature.dataset.ratio=slides[n].dataset.ratio||'';
+ if(feature.dataset.ratio)feature.style.setProperty('--photo-ratio',feature.dataset.ratio);
+ feature.setAttribute('aria-label','查看：'+projects[n].title);
+ q('#num').textContent=fmt(n+1)+' / '+fmt(len);
+ q('#project').textContent=n===0?'关于怡兰':projects[n].title;
+ for(const el of [q('#project'),q('#view')]){
+  el.getAnimations?.().forEach(a=>a.cancel());
+  if(!rm.matches)el.animate?.([{opacity:.18,translate:'0 5px'},{opacity:1,translate:'0 0'}],{duration:260,easing:'ease-out'});
+ }
+}
+function tick(){
+ current+=(target-current)*.09;leanX+=(wantX-leanX)*.08;leanY+=(wantY-leanY)*.08;
+ draw();
+ if(expansion===1)syncFeature(hovered??mod(Math.round(current)));
+ if(Math.abs(target-current)+Math.abs(leanX-wantX)+Math.abs(leanY-wantY)<.003&&expansion===1){current=target;draw();syncFeature(hovered??mod(Math.round(current)));raf=0;return}
+ raf=requestAnimationFrame(tick)
+}
+function animateRing(){if(!raf)raf=requestAnimationFrame(tick)}
+function select(n){hovered=null;target=n;if(rm.matches){current=target;draw();syncFeature(hovered??mod(Math.round(current)))}else animateRing()}
+function revealRing(){
+ if(rm.matches){expansion=1;select(0);return}
+ current=-len;target=0;expansion=0;world.classList.add('unfolding');
+ const token=++revealId,start=performance.now();
+ function reveal(now){
+  if(token!==revealId||phase!=='world')return;
+  const p=Math.min(1,(now-start)/2100),out=1-(1-p)**3;
+  expansion=out;current=-len*(1-out);draw();
+  if(p<1&&phase==='world')requestAnimationFrame(reveal);else{expansion=1;world.classList.remove('unfolding');select(0)}
+ }
+ requestAnimationFrame(reveal);
+}
+function enter(){
+ if(phase!=='desk')return;phase='dive';
+ const r=q('.screen').getBoundingClientRect();
+ q('#camera').style.setProperty('--sx',(r.x+r.width/2)+'px');
+ q('#camera').style.setProperty('--sy',(r.y+r.height/2)+'px');
+ intro.classList.add('diving');intro.inert=true;select(0);
+ const ms=rm.matches?0:1080;
+ setTimeout(()=>{world.classList.add('ready');world.inert=false;intro.classList.add('gone');phase='world';wheelTime=performance.now()+120;revealRing();q('#view').focus({preventScroll:true})},ms);
+}
+function back(){revealId++;expansion=1;world.classList.remove('unfolding');phase='desk';world.inert=true;world.classList.remove('ready');intro.classList.remove('gone','diving');intro.inert=false;q('#enter').focus({preventScroll:true})}
+intro.onclick=enter;intro.addEventListener('wheel',e=>{if(Math.abs(e.deltaY)+Math.abs(e.deltaX)>5)enter()},{passive:true});
+let touch=null;
+intro.addEventListener('pointerdown',e=>touch=[e.clientX,e.clientY]);
+intro.addEventListener('pointermove',e=>{if(touch&&Math.hypot(e.clientX-touch[0],e.clientY-touch[1])>28){touch=null;enter()}});
+for(const event of ['pointerup','pointercancel','pointerleave'])intro.addEventListener(event,()=>touch=null);
+q('#back').onclick=back;q('#prev').onclick=()=>select(Math.round(target)-1);q('#next').onclick=()=>select(Math.round(target)+1);
+world.addEventListener('wheel',e=>{
+ if(phase!=='world')return;e.preventDefault();if(expansion<1||performance.now()<wheelTime)return;const d=Math.abs(e.deltaY)>Math.abs(e.deltaX)?e.deltaY:e.deltaX;
+ if(Math.abs(d)<1)return;select(target+Math.max(-.72,Math.min(.72,d*.0034)));
+},{passive:false});
+stage.addEventListener('pointerdown',e=>{if(e.button!==0||expansion<1)return;press={x:e.clientX,y:e.clientY,id:e.pointerId,n:Math.round(target),moving:false}});
+window.addEventListener('pointermove',e=>{
+ if(phase==='world'&&!rm.matches&&expansion===1){wantX=(e.clientY/innerHeight-.5)*2;wantY=(e.clientX/innerWidth-.5)*2;animateRing()}
+ if(!press||press.id!==e.pointerId)return;
+ let dx=e.clientX-press.x,dy=e.clientY-press.y;
+ if(!press.moving&&Math.hypot(dx,dy)<9)return;
+ press.moving=true;stage.classList.add('dragging');
+ const delta=Math.abs(dx)>Math.abs(dy)?dx:dy;
+ select(press.n-delta/(stage.clientWidth*.28));
+});
+function release(e){if(!press||press.id!==e.pointerId)return;if(press.moving){suppress=performance.now()+250;select(Math.round(target))}press=null;stage.classList.remove('dragging')}
+window.addEventListener('pointerup',release);window.addEventListener('pointercancel',release);
+window.addEventListener('keydown',e=>{
+ if(panel.open)return;
+ if(phase==='desk'&&[' ','ArrowDown','PageDown'].includes(e.key)&&e.target.tagName!=='BUTTON'){e.preventDefault();enter()}
+ if(phase!=='world')return;
+ if(expansion<1&&e.key!=='Escape')return;
+ if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();select(Math.round(target)+(e.key==='ArrowRight'?1:-1))}
+ if(e.key==='Escape')back();
+});
+const foodStills = ["assets/19cee264ccab98c8deab.jpg", "assets/8f44f6de1f6c34ff9fbe.jpg", "assets/b60cdd165127a38542cf.jpg"];
+const creatorVideoData = ["assets/creator-1.mp4", "assets/creator-2.mp4"];
+let creatorVideoURLs;
+function attachCreatorVideos(){
+ const videos=Array.from(q('#body').querySelectorAll?.('.creator-videos video') || []);
+ if(!videos.length)return;
+ creatorVideoURLs = creatorVideoData;
+ videos.forEach((video,j)=>{
+  video.src=creatorVideoURLs[j];
+  video.onplay=()=>videos.forEach(other=>{if(other!==video)other.pause()});
+ });
+}
+panel.addEventListener('close',()=>{if(!panel.open)q('#body').querySelectorAll?.('video').forEach(video=>video.pause())});
+function openPanel(html,album=false){panel.classList.toggle('photo-panel',album);q('#body').innerHTML=html;if(!panel.open)panel.showModal();panel.scrollTop=0}
+function detail(i){
+ const copy=resumeCopy[i];select(Math.round(target)+relative(i,Math.round(target)));
+ if(i===photoCase){openPhotography(copy.title);return}
+ const esc=s=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+ const text='<h2>'+esc(copy.title)+'</h2>'+(copy.subtitle?'<p>'+esc(copy.subtitle)+'</p>':'')+
+ copy.groups.map(([h,rows])=>(h?'<h3>'+esc(h)+'</h3>':'')+rows.map(t=>'<p>'+esc(t)+'</p>').join('')).join('');
+ const img=(src,alt,cls='case-media')=>'<figure class="'+cls+'"><img src="'+src+'" alt="'+alt+'"></figure>';
+ openPanel(text+
+ (i===1&&creatorVideoData.length?'<section class="creator-videos" aria-label="视频作品"><h3>视频作品</h3>'+creatorVideoData.map((_,j)=>'<video controls playsinline preload="none" aria-label="视频作品 '+(j+1)+'"></video>').join('')+'</section>':'')+
+ (portfolioMedia[i]?img(portfolioMedia[i],projects[i].title):'')+
+ (i===2?'<section class="huawei-stills" aria-label="毕业季视频截图"><div>'+huaweiStills.map((src,j)=>img(src,['毕业季短片片头','毕业旅行视频画面'][j],'')).join('')+'</div></section>':'')+
+ ([1,3].includes(i)?img(extraCaseStills[i===1?'creator':'eleme'],i===1?'留学生高温天日记':'外卖骑手街头英语培训'):'')+
+ (i===kclCase&&kclImages[1]?img(kclImages[1],'KCL 纪录片宣发方案'):'')+
+ (i===4?foodStills.map((src,j)=>img(src,['鸿涛苑门店','鑫复盛礼记酒店','青岛老味道门店'][j])).join(''):'')+
+ (i===0?'<p>邮箱：<a href="mailto:tianyilanqd@126.com">tianyilanqd@126.com</a></p>':''));
+ if(i===1)attachCreatorVideos();
+}
+function openPhotography(title){
+ openPanel(`<section class="photo-album" aria-label="${title}">
+  <div class="photo-stage">
+   <img class="current" alt=""><img alt="" aria-hidden="true">
+   <button type="button" data-step="-1" aria-label="上一张"></button>
+   <button type="button" data-step="1" aria-label="下一张"></button>
+   <span class="photo-hint" aria-hidden="true" hidden></span>
+  </div>
+  <footer><h2>${title}</h2><div>
+   <button type="button" data-step="-1" aria-label="上一张">←</button>
+   <output aria-live="polite">01 / ${fmt(photography.length)}</output>
+   <button type="button" data-step="1" aria-label="下一张">→</button>
+  </div></footer>
+ </section>`,true);
+ const album=q('.photo-album'), surface=album.querySelector('.photo-stage');
+ const [first,second]=surface.querySelectorAll('img');
+ const count=album.querySelector('output'), hint=album.querySelector('.photo-hint');
+ let index=0, active=first, incoming=second, revision=0, start=null, wheelAt=-Infinity, wheelMotion=0, wheelDirection=0, skipClick=false;
+ const total=photography.length;
+ first.src=photography[0].src;
+ first.alt='摄影作品 01';
+ const counter=()=>fmt(index+1)+' / '+fmt(total);
+ const updateHint=()=>{hint.textContent=(hint.dataset.step==='-1'?'上一张':'下一张')+'  '+counter()};
+ async function step(delta){
+  index=(index+delta+total)%total;
+  const token=++revision, photo=photography[index];
+  incoming.src=photo.src;
+  try{await incoming.decode()}catch{return}
+  if(token!==revision||!album.isConnected)return;
+  active.classList.remove('current');
+  active.setAttribute('aria-hidden','true');
+  incoming.classList.add('current');
+  incoming.removeAttribute('aria-hidden');
+  incoming.alt='摄影作品 '+fmt(index+1);
+  [active,incoming]=[incoming,active];
+  count.textContent=counter();
+  updateHint();
+ }
+ album.querySelectorAll('[data-step]').forEach(button=>{
+  button.onclick=()=>{if(!skipClick)step(Number(button.dataset.step))};
+ });
+ panel.onkeydown=e=>{
+  if(!album.isConnected||!['ArrowLeft','ArrowRight'].includes(e.key))return;
+  e.preventDefault();step(e.key==='ArrowRight'?1:-1);
+ };
+ surface.onpointerdown=e=>{start=e.clientX;skipClick=false};
+ surface.onpointerup=e=>{
+  if(start===null)return;
+  const offset=e.clientX-start;
+  start=null;
+  if(Math.abs(offset)<36)return;
+  skipClick=true;step(offset<0?1:-1);
+  setTimeout(()=>{skipClick=false},0);
+ };
+ surface.onpointercancel=()=>{start=null};
+ surface.onpointermove=e=>{
+  if(e.pointerType!=='mouse')return;
+  hint.dataset.step=e.target.dataset.step;
+  hint.hidden=false;
+  hint.style.left=Math.min(e.clientX-surface.getBoundingClientRect().left,surface.clientWidth-130)+'px';
+  hint.style.top=e.clientY-surface.getBoundingClientRect().top+'px';
+  updateHint();
+ };
+ surface.onpointerleave=()=>{hint.hidden=true};
+ surface.addEventListener('wheel',e=>{
+  e.preventDefault();
+  const delta=Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:e.deltaY;
+  const direction=Math.sign(delta);
+  const now=performance.now();
+  if(direction!==wheelDirection)wheelMotion=0;
+  wheelDirection=direction;
+  wheelMotion+=Math.abs(delta)*(e.deltaMode===1?16:1);
+  if(wheelMotion<30||now-wheelAt<340)return;
+  wheelAt=now;wheelMotion=0;step(direction);
+ },{passive:false});
+}
+q('#view').onclick=q('#project').onclick=()=>detail(displayed);
+feature.onclick=()=>{if(expansion===1&&performance.now()>=suppress)detail(displayed)};
+q('#index').onclick=()=>{openPanel('<small>YILAN TIAN / CONTENT ARCHIVE</small><h2>作品索引</h2>'+projects.map((p,i)=>'<button class="indexrow" data-id="'+i+'"><i>'+fmt(i+1)+'</i><b>'+p.title+'</b>↗</button>').join(''));q('#body').querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>detail(Number(b.dataset.id)))};
+q('#work').onclick=()=>select(0);q('#information').onclick=()=>detail(0);
+q('#close').onclick=()=>panel.close();panel.onclick=e=>{if(e.target===panel){const r=panel.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)panel.close()}};
+window.addEventListener('resize',draw);syncFeature(0);draw();
+const screenText=q('#screen-type'), caret=q('#screen-caret');
+const copy='Hello, I’m Yilan.';
+screenText.textContent=copy;
+caret.setAttribute('transform','translate('+(36+copy.length*4.8)+' 58)');
+let previousSecond=-1;
+const clock=q('#clock');
+const dateFormat=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Shanghai',weekday:'long',month:'long',day:'numeric',year:'numeric'});
+const timeFormat=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Shanghai',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'});
+function updateClock(){
+ const now=new Date();
+ if(now.getSeconds()===previousSecond)return;
+ previousSecond=now.getSeconds();
+ clock.textContent=timeFormat.format(now)+' (CST) '+dateFormat.format(now);
+}
+updateClock();
+if(typeof setInterval==='function')setInterval(updateClock,1000);
+</script></body></html>
