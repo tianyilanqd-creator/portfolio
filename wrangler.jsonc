@@ -3,7 +3,7 @@
 	"name": "portfolio",
 	"compatibility_date": "2026-11-13",
 	"assets": {
-		"directory": "./public",
+		"directory": ".",
 		"not_found_handling": "none",
 		"html_handling": "auto-trailing-slash"
 	}
